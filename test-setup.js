@@ -1,8 +1,8 @@
-import React from "react";
-import {expect} from "chai";
-import jsdom from "jsdom";
+import React from 'react';
+import {expect} from 'chai';
+import jsdom from 'jsdom';
 
-const doc = jsdom.jsdom("<!doctype html><html><body></body></html>");
+const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
 const win = doc.defaultView;
 
 global.document = doc;

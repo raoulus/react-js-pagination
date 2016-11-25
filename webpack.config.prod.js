@@ -1,21 +1,21 @@
-var path = require("path");
-var webpack = require("webpack");
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-  devtool: "source-map",
+  devtool: 'source-map',
   entry: [
-    "./src/example/App"
+    './src/example/App'
   ],
   output: {
-    path: path.join(__dirname, "src/example/dist"),
-    filename: "bundle.js",
-    publicPath: "/src/example/dist/"
+    path: path.join(__dirname, 'src/example/dist'),
+    filename: 'bundle.js',
+    publicPath: '/src/example/dist/'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
-      "process.env": {
-        "NODE_ENV": JSON.stringify("production")
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
@@ -28,16 +28,16 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loader: "babel",
-        include: path.join(__dirname, "src"),
+        loader: 'babel',
+        include: path.join(__dirname, 'src'),
         exclude: /(node_modules|bower_components)/
       },
       {
         test: /\.less$/,
-        loader: "style!css!less"
+        loader: 'style!css!less'
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: "url-loader?limit=100000"
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'
       }
     ]
   }

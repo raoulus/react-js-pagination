@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import Pagination from "../components/Pagination";
-require("bootstrap/less/bootstrap.less");
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import Pagination from '../components/Pagination';
+require('bootstrap/less/bootstrap.less');
 
 class App extends Component {
   constructor(props) {
     super();
     this.state = {
-      activePage: 15
+      activePage: 1
     };
     this.handlePageChange = ::this._handlePageChange;
   }
@@ -20,11 +20,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Pagination 
-          activePage={this.state.activePage} 
-          itemsCountPerPage={10} 
-          totalItemsCount={450} 
-          pageRangeDisplayed={5}
+        <Pagination
+          activePage={this.state.activePage}
+          itemsCountPerPage={10}
+          totalItemsCount={30}
           onChange={this.handlePageChange}
         />
       </div>
@@ -32,4 +31,4 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));

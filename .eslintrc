@@ -11,7 +11,7 @@
   "rules": {
     "no-undef": 2,
     "semi": [2, "always"],
-    "quotes": [2, "double"],
+    "quotes": [2, "single"],
     "strict": [2, "never"],
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2

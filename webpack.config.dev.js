@@ -1,36 +1,36 @@
-var path = require("path");
-var webpack = require("webpack");
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-  devtool: "eval",
+  devtool: 'eval',
   entry: [
-    "webpack-hot-middleware/client",
-    "./src/example/App"
+    'webpack-hot-middleware/client',
+    './src/example/App'
   ],
   output: {
-    path: path.join(__dirname, "src/example/dist"),
-    filename: "bundle.js",
-    publicPath: "/src/example/dist/"
+    path: path.join(__dirname, 'src/example/dist'),
+    filename: 'bundle.js',
+    publicPath: '/src/example/dist/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
-  resolveLoader: { root: path.join(__dirname, "node_modules") },
+  resolveLoader: { root: path.join(__dirname, 'node_modules') },
   module: {
     loaders: [
       {
         test: /\.js$/,
-        loader: "babel",
-        include: path.join(__dirname, "src"),
+        loader: 'babel',
+        include: path.join(__dirname, 'src'),
         exclude: /(node_modules|bower_components)/
       },
       {
         test: /\.less$/,
-        loader: "style!css!less"
+        loader: 'style!css!less'
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: "url-loader?limit=100000"
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'
       }
     ]
   }
