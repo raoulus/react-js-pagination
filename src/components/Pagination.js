@@ -139,7 +139,7 @@ export default class Pagination extends React.Component {
     );
 
     // last page
-    pages.push(
+    paginationInfo.total_pages !== 1 && pages.push(
       <Page
         key={'last'}
         isActive={activePage === paginationInfo.total_pages}

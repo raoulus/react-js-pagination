@@ -154,7 +154,7 @@ var Pagination = function (_React$Component) {
       }));
 
       // last page
-      pages.push(_react2.default.createElement(_Page2.default, {
+      paginationInfo.total_pages !== 1 && pages.push(_react2.default.createElement(_Page2.default, {
         key: 'last',
         isActive: activePage === paginationInfo.total_pages,
         pageNumber: paginationInfo.total_pages,
