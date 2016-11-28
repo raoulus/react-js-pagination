@@ -56,7 +56,11 @@ ReactDOM.render(<App />, document.getElementById("root"));
 
 Check [Live example](http://vayser.github.io/react-js-pagination)
 
-![Example](https://i.gyazo.com/9af4c2b9e20aa95a67597d3ca64efde3.png)
+![Example](https://cloud.githubusercontent.com/assets/1379228/20664655/6127bc98-b55c-11e6-9ed7-773711bc2100.png)
+
+![Example](https://cloud.githubusercontent.com/assets/1379228/20664674/7777b6ba-b55c-11e6-9fff-ab7fc21820b1.png)
+
+![Example](https://cloud.githubusercontent.com/assets/1379228/20664683/8278a97a-b55c-11e6-8ca2-7c3b41d0e5d0.png)
 
 ## Params
 
@@ -66,8 +70,6 @@ Name | Type | Default | Description
 `onChange` | Function | | Page change handler. Receive pageNumber as arg
 `acivePage` | Number | `1` | Active page
 `itemsCountPerPage` | Number | `10` | Count of items per  page
-`firstPageText` | String / ReactElement | `«` | Text of first page navigation button or whole element
-`lastPageText` | String / ReactElement | `»` | Text of last page navigation button or whole element
 `prevPageText` | String / ReactElement | `⟨` | Text of prev page navigation button or whole element
 `nextPageText` | String / ReactElement | `⟩` | Text of next page navigation button or whole element
 `innerClass` | String | `pagination` | Class name of `<ul>` tag
