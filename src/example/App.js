@@ -23,7 +23,7 @@ class App extends Component {
         <Pagination
           activePage={this.state.activePage}
           itemsCountPerPage={10}
-          totalItemsCount={30}
+          totalItemsCount={150}
           onChange={this.handlePageChange}
         />
       </div>

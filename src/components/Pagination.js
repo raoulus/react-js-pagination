@@ -37,7 +37,6 @@ export default class Pagination extends React.Component {
     } = this.props;
 
     const totalPages = Math.ceil(totalItemsCount / itemsCountPerPage);
-
     return {
       total_pages: totalPages,
       previous_page: activePage - 1,
@@ -119,7 +118,6 @@ export default class Pagination extends React.Component {
     // last pages
     if (hasReachedMiddle()) {
       for(let i = paginationInfo.total_pages - 1; i <= paginationInfo.total_pages - 1; i++) {
-        console.log(i);
         pages.push(
           <Page
             isActive={activePage === i}
