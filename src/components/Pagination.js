@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import paginator from 'paginator';
 import Page from './Page';
 
 export default class Pagination extends React.Component {
@@ -38,15 +37,15 @@ export default class Pagination extends React.Component {
 
     const totalPages = Math.ceil(totalItemsCount / itemsCountPerPage);
     return {
-      total_pages: totalPages,
+      totalPages: totalPages,
       previous_page: activePage - 1,
-      next_page: activePage + 1,
-      has_previous_page: activePage !== 1,
-      has_next_page: activePage !== totalPages
+      nextPage: activePage + 1,
+      hasPreviousPage: activePage !== 1,
+      hasNextPage: activePage !== totalPages
     };
   }
 
-  buildPages() {
+  renderPagination() {
     const pages = [];
     const {
       activePage,
@@ -56,128 +55,91 @@ export default class Pagination extends React.Component {
       activeClass
     } = this.props;
 
-    const PAGE_THRESHOLD = 3;
-
-    function exceedsMinPages() {
-      return paginationInfo.total_pages > PAGE_THRESHOLD;
-    }
-
-    function getBoundaryEnd() {
-      return paginationInfo.total_pages - 2;
-    }
-
-    function hasReachedMiddle() {
-      return exceedsMinPages() && activePage >= getBoundaryEnd();
-    }
-
+    const FIRST_PAGE = 1;
+    const PAGE_OFFSET = 3;
+    const MAX_PAGES = 5;
     const paginationInfo = this.getPaginationInfo();
-    const firstPages = exceedsMinPages() ? PAGE_THRESHOLD : paginationInfo.total_pages - 1;
+    const LAST_PAGE = paginationInfo.totalPages;
 
-    // first page
-    pages.push(<Page
-      isActive={activePage === 1}
-      key='first'
-      pageNumber={1}
-      onClick={onChange}
-      activeClass={activeClass}
-      />
-    );
-
-    // first pages
-    if (activePage <= PAGE_THRESHOLD) {
-      for(let i = 2; i <= firstPages; i++) {
-        pages.push(
-          <Page
-            isActive={i === activePage}
-            key={i}
-            pageNumber={i}
-            onClick={onChange}
-            activeClass={activeClass}
-            />
-        );
-      }
-    }
-
-    // middle page
-    if (activePage > PAGE_THRESHOLD) {
+    function addPage(pageNumber) {
       pages.push(
         <Page
-          key={'dotsBefore'}
-          pageText={<li><span>...</span></li>}
-          />,
-        <Page
-          isActive={activePage <= getBoundaryEnd()}
-          key='middle'
-          pageNumber={hasReachedMiddle() ? getBoundaryEnd() : activePage}
+          isActive={pageNumber === activePage}
+          key={pageNumber}
+          pageNumber={pageNumber}
           onClick={onChange}
           activeClass={activeClass}
           />
       );
     }
 
-    // last pages
-    if (hasReachedMiddle()) {
-      for(let i = paginationInfo.total_pages - 1; i <= paginationInfo.total_pages - 1; i++) {
-        pages.push(
-          <Page
-            isActive={activePage === i}
-            key={i}
-            pageNumber={i}
-            onClick={onChange}
-            activeClass={activeClass}
-            />
-        );
+    function addDots(key) {
+      pages.push(
+        <Page
+          key={key}
+          pageText={<li><span>...</span></li>}
+          />
+      );
+    }
+
+    function addNavigation() {
+      pages.unshift(
+        <Page
+          key={'prev' + paginationInfo.previous_page}
+          pageNumber={paginationInfo.previous_page}
+          onClick={onChange}
+          pageText={prevPageText}
+          isDisabled={!paginationInfo.hasPreviousPage}
+          />
+      );
+      pages.push(
+        <Page
+          key={'next' + paginationInfo.nextPage}
+          pageNumber={paginationInfo.nextPage}
+          onClick={onChange}
+          pageText={nextPageText}
+          isDisabled={!paginationInfo.hasNextPage}
+          />
+      );
+    }
+
+    if (paginationInfo.totalPages <= MAX_PAGES) {
+      // render plain pagination
+      for (let j = 1; j <= LAST_PAGE; j++) {
+        addPage(j);
+      }
+    } else {
+      if (activePage <= PAGE_OFFSET) {
+        addPage(FIRST_PAGE);
+        addPage(FIRST_PAGE + 1);
+        addPage(FIRST_PAGE + 2);
+        addDots('rightDots');
+        addPage(LAST_PAGE);
+      } else if (activePage > PAGE_OFFSET && (LAST_PAGE - activePage) >= PAGE_OFFSET) {
+        addPage(FIRST_PAGE);
+        addDots('leftDots');
+        addPage(activePage);
+        addDots('rightDots');
+        addPage(LAST_PAGE);
+      } else if (activePage > PAGE_OFFSET && (LAST_PAGE - activePage) < PAGE_OFFSET) {
+        addPage(FIRST_PAGE);
+        addDots('leftDots');
+        addPage(LAST_PAGE - 2);
+        addPage(LAST_PAGE - 1);
+        addPage(LAST_PAGE);
       }
     }
 
-    // dots
-    (exceedsMinPages() && activePage < getBoundaryEnd()) && pages.push(
-      <Page
-        key={'dotsAfter'}
-        pageText={<li><span>...</span></li>}
-        />
-    );
-
-    // last page
-    paginationInfo.total_pages !== 1 && pages.push(
-      <Page
-        key={'last'}
-        isActive={activePage === paginationInfo.total_pages}
-        pageNumber={paginationInfo.total_pages}
-        onClick={onChange}
-        activeClass={activeClass}
-        />
-    );
-
-    // previous page
-    pages.unshift(
-      <Page
-        key={'prev' + paginationInfo.previous_page}
-        pageNumber={paginationInfo.previous_page}
-        onClick={onChange}
-        pageText={prevPageText}
-        isDisabled={!paginationInfo.has_previous_page}
-        />
-    );
-
-    // next page
-    pages.push(
-      <Page
-        key={'next' + paginationInfo.next_page}
-        pageNumber={paginationInfo.next_page}
-        onClick={onChange}
-        pageText={nextPageText}
-        isDisabled={!paginationInfo.has_next_page}
-        />
-    );
+    addNavigation();
 
     return pages;
   }
 
   render() {
-    const pages = this.buildPages();
     return (
-      <ul className={this.props.innerClass}>{pages}</ul>
+      <ul className={this.props.innerClass}>
+        {this.renderPagination()}
+      </ul>
     );
   }
 }

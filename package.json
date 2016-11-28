@@ -1,7 +1,7 @@
 {
   "name": "react-js-pagination",
-  "version": "2.0.1",
-  "description": "Simple, easy to use component for pagination. Compatible with bootstrap paginator stylesheets",
+  "version": "2.0.2",
+  "description": "Simple, easy to use component for pagination with zero dependencies. Compatible with bootstrap paginator stylesheets",
   "main": "./dist/Pagination.js",
   "scripts": {
     "clean": "rimraf dist",
@@ -16,26 +16,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vayser/react-js-pagination"
+    "url": "https://github.com/raoulus/react-js-pagination"
   },
   "keywords": [
     "react",
     "reactjs",
     "pagination",
-    "paginator",
-    "bootstrap",
-    "reload",
-    "webpack",
-    "babel",
-    "react-transform",
     "react-component"
   ],
   "author": "Sergey Vayser <wice24@gmail.com> (http://github.com/vayser)",
+  "contributors": [{
+    "name": "Raoul Jaeckel"
+  }],
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/vayser/react-js-pagination/issues"
+    "url": "https://github.com/raoulus/react-js-pagination/issues"
   },
-  "homepage": "https://github.com/vayser/react-js-pagination",
+  "homepage": "https://github.com/raoulus/react-js-pagination",
   "devDependencies": {
     "babel-core": "6.18.2",
     "babel-eslint": "7.1.1",
@@ -76,7 +73,5 @@
     "react": "^15.0.0"
   },
   "dependencies": {
-    "classnames": "^2.2.5",
-    "paginator": "^1.0.0"
   }
 }

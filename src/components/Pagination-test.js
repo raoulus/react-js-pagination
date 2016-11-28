@@ -5,8 +5,8 @@ import Pagination from './Pagination';
 
 describe('<Pagination />', () => {
   const props = {
-    totalItemsCount: 120,
-    itemsCountPerPage: 25,
+    totalItemsCount: 5,
+    itemsCountPerPage: 1,
     onClick: () => {},
     onChange: () => {}
   };
@@ -31,7 +31,7 @@ describe('<Pagination />', () => {
     it('renders last page link as last item', () => {
       const wrapper = mount(<Pagination {...props} />);
       const lastPageIndex = wrapper.children().length - 2;
-      const totalPages = wrapper.instance().getPaginationInfo().total_pages;
+      const totalPages = wrapper.instance().getPaginationInfo().totalPages;
       expect(wrapper.childAt(lastPageIndex).text()).to.eql(totalPages.toString());
     });
 
@@ -61,7 +61,7 @@ describe('<Pagination />', () => {
 
       it('shows exact 3 page links', function() {
         const wrapper = mount(<Pagination {...props} />);
-        expect(wrapper.instance().getPaginationInfo().total_pages).to.have.eql(3);
+        expect(wrapper.instance().getPaginationInfo().totalPages).to.have.eql(3);
         expect(wrapper.find('li')).to.have.length(5);
         expect(wrapper.childAt(1).text()).to.eql('1');
         expect(wrapper.childAt(2).text()).to.eql('2');

@@ -10,10 +10,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _paginator = require('paginator');
-
-var _paginator2 = _interopRequireDefault(_paginator);
-
 var _Page = require('./Page');
 
 var _Page2 = _interopRequireDefault(_Page);
@@ -46,16 +42,16 @@ var Pagination = function (_React$Component) {
 
       var totalPages = Math.ceil(totalItemsCount / itemsCountPerPage);
       return {
-        total_pages: totalPages,
+        totalPages: totalPages,
         previous_page: activePage - 1,
-        next_page: activePage + 1,
-        has_previous_page: activePage !== 1,
-        has_next_page: activePage !== totalPages
+        nextPage: activePage + 1,
+        hasPreviousPage: activePage !== 1,
+        hasNextPage: activePage !== totalPages
       };
     }
   }, {
-    key: 'buildPages',
-    value: function buildPages() {
+    key: 'renderPagination',
+    value: function renderPagination() {
       var pages = [];
       var _props2 = this.props,
           activePage = _props2.activePage,
@@ -65,49 +61,25 @@ var Pagination = function (_React$Component) {
           activeClass = _props2.activeClass;
 
 
-      var PAGE_THRESHOLD = 3;
-
-      function exceedsMinPages() {
-        return paginationInfo.total_pages > PAGE_THRESHOLD;
-      }
-
-      function getBoundaryEnd() {
-        return paginationInfo.total_pages - 2;
-      }
-
-      function hasReachedMiddle() {
-        return exceedsMinPages() && activePage >= getBoundaryEnd();
-      }
-
+      var FIRST_PAGE = 1;
+      var PAGE_OFFSET = 3;
+      var MAX_PAGES = 5;
       var paginationInfo = this.getPaginationInfo();
-      var firstPages = exceedsMinPages() ? PAGE_THRESHOLD : paginationInfo.total_pages - 1;
+      var LAST_PAGE = paginationInfo.totalPages;
 
-      // first page
-      pages.push(_react2.default.createElement(_Page2.default, {
-        isActive: activePage === 1,
-        key: 'first',
-        pageNumber: 1,
-        onClick: onChange,
-        activeClass: activeClass
-      }));
-
-      // first pages
-      if (activePage <= PAGE_THRESHOLD) {
-        for (var i = 2; i <= firstPages; i++) {
-          pages.push(_react2.default.createElement(_Page2.default, {
-            isActive: i === activePage,
-            key: i,
-            pageNumber: i,
-            onClick: onChange,
-            activeClass: activeClass
-          }));
-        }
+      function addPage(pageNumber) {
+        pages.push(_react2.default.createElement(_Page2.default, {
+          isActive: pageNumber === activePage,
+          key: pageNumber,
+          pageNumber: pageNumber,
+          onClick: onChange,
+          activeClass: activeClass
+        }));
       }
 
-      // middle page
-      if (activePage > PAGE_THRESHOLD) {
+      function addDots(key) {
         pages.push(_react2.default.createElement(_Page2.default, {
-          key: 'dotsBefore',
+          key: key,
           pageText: _react2.default.createElement(
             'li',
             null,
@@ -117,79 +89,64 @@ var Pagination = function (_React$Component) {
               '...'
             )
           )
-        }), _react2.default.createElement(_Page2.default, {
-          isActive: activePage <= getBoundaryEnd(),
-          key: 'middle',
-          pageNumber: hasReachedMiddle() ? getBoundaryEnd() : activePage,
-          onClick: onChange,
-          activeClass: activeClass
         }));
       }
 
-      // last pages
-      if (hasReachedMiddle()) {
-        for (var _i = paginationInfo.total_pages - 1; _i <= paginationInfo.total_pages - 1; _i++) {
-          pages.push(_react2.default.createElement(_Page2.default, {
-            isActive: activePage === _i,
-            key: _i,
-            pageNumber: _i,
-            onClick: onChange,
-            activeClass: activeClass
-          }));
+      function addNavigation() {
+        pages.unshift(_react2.default.createElement(_Page2.default, {
+          key: 'prev' + paginationInfo.previous_page,
+          pageNumber: paginationInfo.previous_page,
+          onClick: onChange,
+          pageText: prevPageText,
+          isDisabled: !paginationInfo.hasPreviousPage
+        }));
+        pages.push(_react2.default.createElement(_Page2.default, {
+          key: 'next' + paginationInfo.nextPage,
+          pageNumber: paginationInfo.nextPage,
+          onClick: onChange,
+          pageText: nextPageText,
+          isDisabled: !paginationInfo.hasNextPage
+        }));
+      }
+
+      if (paginationInfo.totalPages <= MAX_PAGES) {
+        // render plain pagination
+        for (var j = 1; j <= LAST_PAGE; j++) {
+          addPage(j);
+        }
+      } else {
+        if (activePage <= PAGE_OFFSET) {
+          addPage(FIRST_PAGE);
+          addPage(FIRST_PAGE + 1);
+          addPage(FIRST_PAGE + 2);
+          addDots('rightDots');
+          addPage(LAST_PAGE);
+        } else if (activePage > PAGE_OFFSET && LAST_PAGE - activePage >= PAGE_OFFSET) {
+          addPage(FIRST_PAGE);
+          addDots('leftDots');
+          addPage(activePage);
+          addDots('rightDots');
+          addPage(LAST_PAGE);
+        } else if (activePage > PAGE_OFFSET && LAST_PAGE - activePage < PAGE_OFFSET) {
+          addPage(FIRST_PAGE);
+          addDots('leftDots');
+          addPage(LAST_PAGE - 2);
+          addPage(LAST_PAGE - 1);
+          addPage(LAST_PAGE);
         }
       }
 
-      // dots
-      exceedsMinPages() && activePage < getBoundaryEnd() && pages.push(_react2.default.createElement(_Page2.default, {
-        key: 'dotsAfter',
-        pageText: _react2.default.createElement(
-          'li',
-          null,
-          _react2.default.createElement(
-            'span',
-            null,
-            '...'
-          )
-        )
-      }));
-
-      // last page
-      paginationInfo.total_pages !== 1 && pages.push(_react2.default.createElement(_Page2.default, {
-        key: 'last',
-        isActive: activePage === paginationInfo.total_pages,
-        pageNumber: paginationInfo.total_pages,
-        onClick: onChange,
-        activeClass: activeClass
-      }));
-
-      // previous page
-      pages.unshift(_react2.default.createElement(_Page2.default, {
-        key: 'prev' + paginationInfo.previous_page,
-        pageNumber: paginationInfo.previous_page,
-        onClick: onChange,
-        pageText: prevPageText,
-        isDisabled: !paginationInfo.has_previous_page
-      }));
-
-      // next page
-      pages.push(_react2.default.createElement(_Page2.default, {
-        key: 'next' + paginationInfo.next_page,
-        pageNumber: paginationInfo.next_page,
-        onClick: onChange,
-        pageText: nextPageText,
-        isDisabled: !paginationInfo.has_next_page
-      }));
+      addNavigation();
 
       return pages;
     }
   }, {
     key: 'render',
     value: function render() {
-      var pages = this.buildPages();
       return _react2.default.createElement(
         'ul',
         { className: this.props.innerClass },
-        pages
+        this.renderPagination()
       );
     }
   }]);

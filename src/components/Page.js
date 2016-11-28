@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import cx from 'classnames';
 
 export default class Page extends Component {
   static propTypes = {
@@ -41,17 +40,13 @@ export default class Page extends Component {
     } = this.props;
 
     const text = pageText || pageNumber;
-    const css = cx({
-      [activeClass]: isActive,
-      [disabledClass]: isDisabled
-    });
 
     if (React.isValidElement(text)) {
       return text;
     }
 
     return (
-      <li className={css}>
+      <li className={`${isActive ? activeClass : ''} ${isDisabled ? disabledClass : ''}`}>
         <a onClick={this.onClickHandler.bind(this)} href='#'>
           {text}
         </a>

@@ -1,4 +1,4 @@
-# react-js-pagination
+# react-js-pagination (fork)
 
 **A ReactJS [dumb](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) component to render a pagination.**
 
@@ -6,10 +6,10 @@ The component comes with no built-in styles. HTML layout compatible with [Bootst
 
 ## Installation
 
-Install `react-js-pagination` with [npm](https://www.npmjs.com/):
+Install `raoulus/react-js-pagination` with [npm](https://www.npmjs.com/):
 
 ```
-$ npm install react-js-pagination
+$ npm install raoulus/react-js-pagination
 ```
 
 ## Usage
@@ -55,6 +55,8 @@ ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
 Check [Live example](https://raoulus.github.io/react-js-pagination/)
+
+Screenshots
 
 ![Example](https://cloud.githubusercontent.com/assets/1379228/20664655/6127bc98-b55c-11e6-9ed7-773711bc2100.png)
 
