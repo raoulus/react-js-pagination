@@ -98,14 +98,16 @@ var Pagination = function (_React$Component) {
           pageNumber: paginationInfo.previous_page,
           onClick: onChange,
           pageText: prevPageText,
-          isDisabled: !paginationInfo.hasPreviousPage
+          isDisabled: !paginationInfo.hasPreviousPage,
+          className: 'pagination-prev-link'
         }));
         pages.push(_react2.default.createElement(_Page2.default, {
           key: 'next' + paginationInfo.nextPage,
           pageNumber: paginationInfo.nextPage,
           onClick: onChange,
           pageText: nextPageText,
-          isDisabled: !paginationInfo.hasNextPage
+          isDisabled: !paginationInfo.hasNextPage,
+          className: 'pagination-next-link'
         }));
       }
 

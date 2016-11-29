@@ -44,7 +44,8 @@ var Page = function (_Component) {
           activeClass = _props.activeClass,
           disabledClass = _props.disabledClass,
           isActive = _props.isActive,
-          isDisabled = _props.isDisabled;
+          isDisabled = _props.isDisabled,
+          className = _props.className;
 
 
       var text = pageText || pageNumber;
@@ -58,7 +59,7 @@ var Page = function (_Component) {
         { className: (isActive ? activeClass : '') + ' ' + (isDisabled ? disabledClass : '') },
         _react2.default.createElement(
           'a',
-          { onClick: this.onClickHandler.bind(this), href: '#' },
+          { onClick: this.onClickHandler.bind(this), href: '#', className: className || '' },
           text
         )
       );
@@ -75,7 +76,8 @@ Page.propTypes = {
   isActive: _react.PropTypes.bool,
   isDisabled: _react.PropTypes.bool,
   activeClass: _react.PropTypes.string,
-  disabledClass: _react.PropTypes.string
+  disabledClass: _react.PropTypes.string,
+  className: _react.PropTypes.string
 };
 Page.defaultProps = {
   activeClass: 'active',

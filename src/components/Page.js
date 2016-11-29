@@ -11,7 +11,8 @@ export default class Page extends Component {
     isActive: PropTypes.bool,
     isDisabled: PropTypes.bool,
     activeClass: PropTypes.string,
-    disabledClass: PropTypes.string
+    disabledClass: PropTypes.string,
+    className: PropTypes.string
   }
 
   static defaultProps = {
@@ -36,7 +37,8 @@ export default class Page extends Component {
       activeClass,
       disabledClass,
       isActive,
-      isDisabled
+      isDisabled,
+      className
     } = this.props;
 
     const text = pageText || pageNumber;
@@ -47,7 +49,7 @@ export default class Page extends Component {
 
     return (
       <li className={`${isActive ? activeClass : ''} ${isDisabled ? disabledClass : ''}`}>
-        <a onClick={this.onClickHandler.bind(this)} href='#'>
+        <a onClick={this.onClickHandler.bind(this)} href="#" className={className || ''}>
           {text}
         </a>
       </li>

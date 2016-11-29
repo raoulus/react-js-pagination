@@ -90,6 +90,7 @@ export default class Pagination extends React.Component {
           onClick={onChange}
           pageText={prevPageText}
           isDisabled={!paginationInfo.hasPreviousPage}
+          className="pagination-prev-link"
           />
       );
       pages.push(
@@ -99,6 +100,7 @@ export default class Pagination extends React.Component {
           onClick={onChange}
           pageText={nextPageText}
           isDisabled={!paginationInfo.hasNextPage}
+          className="pagination-next-link"
           />
       );
     }
